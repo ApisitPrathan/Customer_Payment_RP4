@@ -1,0 +1,1173 @@
+<style>
+    .pq-grid .darkblue td {
+        background: #89ACDC;
+        color: white;
+    }
+
+    .pq-grid .blue td {
+        background: blue;
+        color: white;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    span.saving {
+        display: none;
+        font-size: large;
+        background: yellow;
+        color: Red;
+        font-weight: normal;
+        margin-left: 20px;
+    }
+
+    tr.red td {
+        background: red;
+        color: Green;
+    }
+
+    tr.green td {
+        background: green;
+        color: yellow;
+    }
+
+    tr td.green {
+        background: lightgreen;
+        color: Red;
+    }
+
+    tr td.red {
+        background: brown;
+        color: yellow;
+    }
+
+    tr td.brightYellow {
+        background: #FCF3CF;
+        color: #000033;
+    }
+
+
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+
+    div.pq-grid td.ui-state-highlight {
+        background: #F1C40F;
+        font-weight: bold;
+        color: black;
+    }
+
+
+    .pq-grid-cell-hover.ui-state-hover,
+    .pq-grid-row-hover.ui-state-hover>td {
+        background: #FCFA5D;
+    }
+
+    tr td.brightYellow {
+        background: #F8E6F0;
+        color: black;
+        border-color: black;
+        border-style: solid;
+        border-width: 5px;
+    }
+
+    tr td.brightBlue {
+        background: #DDE8F3;
+        color: black;
+        border-color: black;
+        border-style: solid;
+        border-width: 5px;
+    }
+
+    body {
+
+        font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    a {
+        color: #b63b4d;
+        text-decoration: none;
+    }
+
+    /** =======================
+ * Contenedor Principal
+ ===========================*/
+
+
+    h1 {
+        color: #FFF;
+        font-size: 24px;
+        font-weight: 400;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    h1 a {
+        color: #c12c42;
+        font-size: 16px;
+    }
+
+    .accordion {
+        width: 100%;
+        max-width: 360px;
+        margin: 30px auto 20px;
+        background: #FFF;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .accordion .link {
+        cursor: pointer;
+        display: block;
+        padding: 15px 15px 15px 42px;
+        color: #4D4D4D;
+        font-size: 14px;
+        font-weight: 700;
+        border-bottom: 1px solid #CCC;
+        position: relative;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+    .accordion li:last-child .link {
+        border-bottom: 0;
+    }
+
+    .accordion li i {
+        position: absolute;
+        top: 16px;
+        left: 12px;
+        font-size: 18px;
+        color: #595959;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+    .accordion li i.fa-chevron-down {
+        right: 12px;
+        left: auto;
+        font-size: 16px;
+    }
+
+    .accordion li.open .link {
+        color: #b63b4d;
+    }
+
+    .accordion li.open i {
+        color: #b63b4d;
+    }
+
+    .accordion li.open i.fa-chevron-down {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    /**
+ * Submenu
+ -----------------------------*/
+
+
+    .submenu {
+        display: none;
+        background: #444359;
+        font-size: 14px;
+    }
+
+    .submenu li {
+        border-bottom: 1px solid #4b4a5e;
+    }
+
+    .submenu a {
+        display: block;
+        text-decoration: none;
+        color: #d9d9d9;
+        padding: 12px;
+        padding-left: 42px;
+        -webkit-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .submenu a:hover {
+        background: #b63b4d;
+        color: #FFF;
+    }
+
+    tr td.SectionColor {
+        background: #D6EAF8;
+
+    }
+
+    tr td.SectionColor2 {
+        background: #FADBD8;
+
+    }
+
+    tr td.brightYellow {
+        background: #F9F507;
+        color: #000033;
+    }
+
+    .pq-grid .Blue {
+
+        color: #0D46D2;
+    }
+
+    .pq-grid .BlueGrandTotal {
+        background: #D9D2DC;
+        color: #0D46D2;
+    }
+
+    .pq-grid .GrandTotal {
+        background: #D9D2DC;
+        color: black;
+
+    }
+</style>
+<script src="pqGrid/jquery.min.js"></script>
+<script src="pqGrid/jquery-ui.min.js"></script>
+<script src="pqgrid.min.js"></script>
+<script>
+    var $pageID='58af4a86-c27f-467a-b0a7-9036676ba2a1';
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    var d = new Date(2020, 04, 31);
+    var tempData = "";
+    var canEdit = false;
+    var lastMonthStr = "";
+
+    var nextMonth = "";
+    var curMonth = "";
+
+    var day = "";
+    var dayTxt = "";
+
+    var Transection_Date = [];
+    var selectTransection_Date = [];
+    var Billing_Team = [];
+    var selectBilling_Team = [];
+    var Bill_Pleacment = [];
+    var selectBill_Pleacment = [];
+
+    var Sum_Total_Amount,
+        Sum_of_Total_Applied_Amount,
+        Sum_OS_Amount,
+        Sum_Amount_to_Paid;
+
+    var CLSTeam_Group = [];
+    var selectCLSTeam = [];
+
+    var BC_Group = [];
+    var selectBC = [];
+
+    var Credit_Rating_Group = [];
+    var selectCredit_Rating = [];
+
+    var Billing_Type_Group = [];
+    var selectBilling_Type = [];
+
+    var Collection_Type_Group = [];
+    var selectCollection_Type = [];
+
+    var Billing_Placement_Date_Group = [];
+    var selectBilling_Placement_Date = [];
+
+    var Collection_Payment_Date_Group = [];
+    var selectCollection_Payment_Date = [];
+
+    var Group_Customer_Group = [];
+    var selectGroup_Customer = [];
+
+    var Business_Type_Group = [];
+    var selectBusiness_Type = [];
+
+    function setMenu() {
+
+
+        var Accordion = function (el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+
+            // Variables privadas
+            var links = this.el.find('.link');
+            // Evento
+            links.on('click', { el: this.el, multiple: this.multiple }, this.dropdown)
+        }
+
+        Accordion.prototype.dropdown = function (e) {
+            var $el = e.data.el;
+            $this = $(this),
+                $next = $this.next();
+
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+
+            if (!e.data.multiple) {
+                $el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+            };
+        }
+
+        var accordion = new Accordion($('#accordion'), false);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+
+
+
+    }
+
+    function getDate(time) {
+
+        let end = time.indexOf(')');
+        let subEnd = time.substr(0, end);
+        let str = subEnd.indexOf('(') + 1;
+        return subEnd.substr(str)
+    }
+    function convertDate(ui) {
+        var a = new Date(+getDate(ui));
+        //var a = new Date(ui);
+        // //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        //var month = months[a.getMonth()];
+        var month = a.getMonth() + 1;
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = month + ' ' + date + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        return new Date(time);
+    }
+
+    function replaceAll(string, search, replace) {
+        if (string == undefined) { return ""; }
+        else {
+            return string.split(search).join(replace);
+        }
+    }
+
+    function isEmpty(val) {
+        return (val === undefined || val == null || val.length <= 0) ? true : false;
+    }
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+    function getCLSTeam(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_CLSTEAM';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    CLSTeam_Group = data;
+                }
+        });
+    }
+    //#region load master
+    function getBC(pCLS_Team){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_BC&Filter1=' + pCLS_Team + '&Filter2=';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    BC_Group = [];
+                    selectBC = [];
+                    BC_Group = data;
+                    //BC
+                    for (var ii = 0; ii < BC_Group.length; ++ii) {
+                        selectBC.push(BC_Group[ii]["OptionsText"]);
+                        //var obj = {};
+                        //obj[ii] = BC_Group[ii]["OptionsText"];
+                        //selectBC.push(obj);
+                    }
+                    var $grid = $("#grid");
+                    var BC_filter = $grid.pqGrid("getColumn", { dataIndx: "BC" }).filter;
+                    $.extend(BC_filter, {
+                        options: selectBC,
+                        condition: "contain",
+                        prepend: { '': '--All BC--' },
+                        cache: null
+                    });
+                    $grid.pqGrid("refreshHeader");
+                }
+        });
+    }
+    function getCredit_Rating(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Credit_Rating';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Credit_Rating_Group = data;
+                }
+        });
+    }
+    function getBilling_Type(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Billing_Type';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Billing_Type_Group = data;
+                }
+        });
+    }
+    function getCollection_Type(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Collection_Type';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Collection_Type_Group = data;
+                }
+        });
+    }
+    function getBilling_Placement_Date(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Billing_Placement_Date';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Billing_Placement_Date_Group = data;
+                }
+        });
+    }
+    function getCollection_Payment_Date(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Collection_Payment_Date';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Collection_Payment_Date_Group = data;
+                }
+        });
+    }
+    function getGroup_Customer(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Group_Customer';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Group_Customer_Group = data;
+                }
+        });
+    }
+    function getBusiness_Type(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Business_Type';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    Business_Type_Group = data;
+                }
+        });
+    }
+    //#endregion
+    function BindGrid() {
+        //to check whether any row is currently being edited.
+        function isEditing($grid) {
+            var rows = $grid.pqGrid("getRowsByClass", { cls: 'pq-row-edit' });
+            if (rows.length > 0) {
+                //focus on editor if any
+                $grid.find(".pq-editor-focus").focus();
+                return true;
+            }
+            return false;
+        }
+
+        var dataModel = {
+            recIndx: "ID",
+            location: "remote",
+            dataType: "JSON",
+            method: "GET",
+            //url: "http://13.192.0.194/OLKService/LTO/GetCustomerListMainLTO?pq_curPage=1&pq_rPP=20",
+            //url: "http://13.192.0.194/OLKService/LTO/GetCustomerListMainLTO?CustID="+filterCustID,
+            //url: "http://13.192.0.194/CashMatchingService2/CashMatching/GetCashMatchingList",
+            //url: "http://localhost:54223/CashMatching/GetCashMatchingList",
+            url: "/Customer_Payment_Service/Report/GetReport_By_Customer_Payment?Period="+ $("#ddlPeriod").val(), //+ "&pq_curPage=1&pq_rPP=20",
+            //url: "http://localhost:54223/ReportByCust/GetReportByCustList",
+            getData: function (dataJSON) {
+                $(".saving", $grid).hide();
+
+                var data = dataJSON.data;
+                tempData = dataJSON.data;
+                 var pCLS_Team = !isEmpty(colM[3].filter.value) ? colM[3].filter.value : "";
+                 getBC(pCLS_Team);
+                return { curPage: dataJSON.curPage, totalRecords: dataJSON.totalRecords, data: data };
+
+            }
+        };
+
+
+        var colModel = [
+            colM = [
+                
+                {
+                    title: "Cust. ID ", width: 100, dataIndx: "CUST_ID", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "Customer Name (TH)", width: 200, dataIndx: "Customer_Name", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "Customer Name (ENG)", width: 200, dataIndx: "Customer_Name_Eng", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "CLS Team", width: 200, dataIndx: "CLS_TEAM", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All CLS Team--' },
+                        //listeners: ['change']
+                        listeners: [{ 'change': filterhandler}],
+                        // listeners: [{
+                        //     "change": function (evt,ui) {
+                        //         //columnBC
+                        //         var columnBC = $grid.pqGrid("getColumn", { dataIndx: "BC" });
+                        //         columnBC.filter.value=null;
+                                
+                        //         return;
+                        //      }
+                        // }]
+                    }
+                },
+                {
+                    title: "BC", width: 200, dataIndx: "BC", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All BC Team--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Current", width: 100, dataIndx: "OST_AMOUNT0_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT0_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT0_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT0_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT0_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "1-30 days (B1)", width: 100, dataIndx: "OST_AMOUNT1_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT1_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT1_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT1_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT1_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "31-60 days (B2)", width: 100, dataIndx: "OST_AMOUNT2_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT2_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT2_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT2_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT2_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "61-90 days (B3)", width: 100, dataIndx: "OST_AMOUNT3_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT3_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT3_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT3_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT3_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "91 days+ (B4&before)", width: 100, dataIndx: "OST_AMOUNT4_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT4_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT4_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT4_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT4_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Total as of "+ $.datepicker.formatDate('dd M', new Date()), width: 100, dataIndx: "OST_AMOUNT_Total", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT_Total == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT_Total < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT_Total"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT_Total"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Average Invoice Amount", width: 100, dataIndx: "Average_Invoice_Amount", copy: false,editable: false,align: "right",cls: "brightYellow",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.Average_Invoice_Amount == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.Average_Invoice_Amount < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["Average_Invoice_Amount"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["Average_Invoice_Amount"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Average Payment Day", width: 100, dataIndx: "Average_Payment_Day", copy: false,editable: false,align: "right",cls: "brightYellow",
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "Credit Term", width: 100, dataIndx: "Credit_Term", copy: false,editable: false,cls: "brightBlue",
+                },
+                {
+                    title: "Credit Rating", width: 100, dataIndx: "Credit_Rating", copy: false,editable: false,cls: "brightBlue",
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Credit Rating--' },
+                        listeners: ['change']
+                    },
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.Credit_Rating == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.Credit_Rating < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["Credit_Rating"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["Credit_Rating"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Credit Limit", width: 100, dataIndx: "Credit_Limit", copy: false,editable: false,align: "right",cls: "brightBlue",
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.Credit_Limit == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.Credit_Limit < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["Credit_Limit"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["Credit_Limit"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "First invoice date", width: 100, dataIndx: "First_Invoice_Date", copy: false,editable: false,
+                },
+                {
+                    title: "Billing Type", width: 200, dataIndx: "Billing_Type", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Billing Type--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Collection Type", width: 100, dataIndx: "Collection_Type", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Collection Type--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Billing Placement Date", width: 100, dataIndx: "Billing_Placement_Date", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Billing Placement Date--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Collection payment Date", width: 100, dataIndx: "Collection_Payment_Date", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Collection payment Date--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "MIF", width: 50, dataIndx: "MIF", copy: false,editable: false,align: "right",
+                },
+                {
+                    title: "Group Customer", width: 100, dataIndx: "Group_Customer", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Group Customer--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Business Type", width: 100, dataIndx: "Business_Type", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All Business Type--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "Reading Source", width: 100, dataIndx: "Reading_Source", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+            ]
+        ];
+
+        var newobj = {
+            dataModel: dataModel,
+            // groupModel : groupModel,
+            colModel: colM,
+            pageModel: { type: "remote", rPP: 20, strRpp: "{0}" },
+            editable: false,
+            selectionModel: { type: 'cell' },
+            filterModel: { on: true, mode: "AND", header: true },
+            hoverMode: 'row',
+            selectionModel: { type: 'row', mode: 'range' },
+            height: 'flex',
+            scrollModel: { horizontal: true, Vertical: true },
+            showTitle: true,
+            showBottom: true,
+            copyModel: { header: true },
+            editable: true,
+            title: "Report By Customer Payment",
+            resizable: true,
+            freezeCols: 2,
+            showBottom: true,
+            numberCell: { resizable: true, title: "#" },
+            trackModel: { on: true }, //to turn on the track changes.  
+            editable: function (ui) {
+                var $grid = $(this);
+                var rowIndx = ui.rowIndx;
+                if ($grid.pqGrid("hasClass", { rowIndx: rowIndx, cls: 'pq-row-edit' }) == true) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+                //return this.hasClass({ rowIndx: ui.rowIndx, cls: 'pq-row-edit' });
+            },
+            toolbar: {
+                cls: 'pq-toolbar-export',
+                items: [
+                {
+                        type: "<span>&nbsp;&nbsp;</span>"
+                },
+                {
+                        type: 'button',
+                        label: "Export to Excel",
+                        icon: 'ui-icon-document',
+                        listeners: [{
+                            "click": function (evt) {
+                                  var filterCustomer_ID = !isEmpty(colM[0].filter.value) ? colM[0].filter.value : "";//Customer_ID
+                                  var filterCustomer_Name = !isEmpty(colM[1].filter.value) ? colM[1].filter.value : "";//Customer_Name
+                                  var filterCustomer_Name_Eng = !isEmpty(colM[2].filter.value) ? colM[2].filter.value : "";//Customer_Name_Eng
+                                  var filterCLSTeam = !isEmpty(colM[3].filter.value) ? colM[3].filter.value : "";//CLSTeam
+                                  var filterBC = !isEmpty(colM[4].filter.value) ? colM[4].filter.value : "";//BC
+                                  var filterAverage_Payment_Day = !isEmpty(colM[12].filter.value) ? colM[12].filter.value : "";//Average Payment Day
+                                  var filterCredit_Rating = !isEmpty(colM[14].filter.value) ? colM[14].filter.value : "";//Credit Rating
+                                  var filterCredit_Limit = !isEmpty(colM[15].filter.value) ? colM[15].filter.value : "";//Credit Limit
+                                  var filterBilling_Type = !isEmpty(colM[17].filter.value) ? colM[17].filter.value : "";//Billing Type
+                                  var filterCollection_Type  = !isEmpty(colM[18].filter.value) ? colM[18].filter.value : "";//Collection Type 
+                                  var filterBilling_Placement_Date = !isEmpty(colM[19].filter.value) ? colM[19].filter.value : "";//Billing Placement Date
+                                  var filterCollection_payment_Date = !isEmpty(colM[20].filter.value) ? colM[20].filter.value : "";//Collection payment Date
+                                  var filterGroup_Customer = !isEmpty(colM[22].filter.value) ? colM[22].filter.value : "";//Group Customer
+                                  var filterBusiness_Type = !isEmpty(colM[23].filter.value) ? colM[23].filter.value : "";//Business Type
+                                  var filterReading_Source = !isEmpty(colM[24].filter.value) ? colM[24].filter.value : "";//Reading_Source
+                                 var urlExport = "/Customer_Payment_Service/Report/DownloadExcelReport_By_Customer_Payment?" + 
+                                 "FileName=Report By Customer Payment" +
+                                 "&Period="+  $("#ddlPeriod").val() +
+                                 "&Customer_Id="+ filterCustomer_ID +
+                                 "&Customer_Name="+ filterCustomer_Name +
+                                 "&Customer_Name_Eng="+ filterCustomer_Name_Eng +
+                                 "&BC="+ filterBC +
+                                 "&CLS_Team="+ filterCLSTeam +
+                                 "&Average_Payment_Day="+ filterAverage_Payment_Day +
+                                 "&Credit_Rating="+  filterCredit_Rating +
+                                 "&Credit_Limit="+ filterCredit_Limit +
+                                 "&Billing_Type="+ filterBilling_Type +
+                                 "&Collection_Type="+ filterCollection_Type +
+                                 "&Billing_Placement_Date="+ filterBilling_Placement_Date +
+                                 "&Collection_Payment_Date="+ filterCollection_payment_Date +
+                                 "&Group_Customer="+ filterGroup_Customer +
+                                 "&Business_Type="+ filterBusiness_Type +
+                                 "&Reading_Source="+ filterReading_Source
+                                 window.location.href = urlExport;
+                            }
+                        }]
+                }
+                ]
+            }
+        };
+
+        var $summary = "";
+
+        newobj.render = function (evt, ui) {
+            $summary = $("<div class='pq-grid-summary'  ></div>")
+                .prependTo($(".pq-grid-bottom", this));
+
+            console.log($summary);
+        }
+
+        function filterhandler(evt, ui) {
+            var columnBC = $grid.pqGrid("getColumn", { dataIndx: "BC" });
+            columnBC.filter.value = null;
+            var filterObject = [];
+            var CM = $grid.pqGrid("getColModel");
+            for (var i = 0, len = CM.length; i < len; i++) {
+                var dataIndx = CM[i].dataIndx;
+                var val = "";
+                if (CM[i].filter != undefined)
+                    val = CM[i].filter.value;
+                if (dataIndx == ui.dataIndx)
+                    val = ui.value;
+                filterObject.push({ dataIndx: dataIndx, condition: 'contain', value: val });
+            }
+
+
+            //var filterObject = [{ dataIndx: 'CLS_Team', condition: 'contain', value: ui.value }];
+            $grid.pqGrid("filter", {
+                oper: 'replace',
+                data: filterObject
+            });
+        }
+
+        function calculateSummary() {
+            var Sum_R_1 = 0,
+                Sum_R_2 = 0,
+                Sum_R_3 = 0,
+                Sum_R_5 = 0,
+                Sum_Total = 0
+            if (tempData != "") {
+                for (var i = 0; i < tempData.length; i++) {
+                    var row = tempData[i];
+                    //Sum_OST_AMOUNT_ART_AGING_BUCKETS += parseFloat(row.OST_AMOUNT_ART_AGING_BUCKETS);
+                    Sum_R_1 += parseFloat(row.R_1);
+                    Sum_R_2 += parseFloat(row.R_2);
+                    Sum_R_3 += parseFloat(row.R_3);
+                    Sum_R_5 += parseFloat(row.R_5);
+                    Sum_Total += parseFloat(row.Total);
+                }
+                //Sum_OST_AMOUNT_ART_AGING_BUCKETS = $.paramquery.formatCurrency(Sum_OST_AMOUNT_ART_AGING_BUCKETS);
+                Sum_R_1 = $.paramquery.formatCurrency(Sum_R_1);
+                Sum_R_2 = $.paramquery.formatCurrency(Sum_R_2);
+                Sum_R_3 = $.paramquery.formatCurrency(Sum_R_3);
+                Sum_R_5 = $.paramquery.formatCurrency(Sum_R_5);
+                Sum_Total = $.paramquery.formatCurrency(Sum_Total);
+                totalData = {
+                    Status_WHT: "<b>Total :</b>",
+                    //OST_AMOUNT_ART_AGING_BUCKETS: Sum_OST_AMOUNT_ART_AGING_BUCKETS,
+                    R_1: Sum_R_1,
+                    R_2: Sum_R_2,
+                    R_3: Sum_R_3,
+                    R_5: Sum_R_5,
+                    Total: Sum_Total
+
+                };
+                var data = [totalData];
+                var newobj = { data: data, $cont: $summary };
+                $("#grid").pqGrid("createTable", newobj);
+            }
+
+        }
+
+
+        newobj.refresh = function (evt, ui) {
+            //calculateSummary();
+
+
+        }
+        var $grid = $("#grid").pqGrid(newobj);
+        
+        $grid.one("pqgridload", function (evt, ui) {
+
+             //CLSTeam_Group 
+             for (var ii = 0; ii < CLSTeam_Group.length; ++ii) {
+                selectCLSTeam.push(CLSTeam_Group[ii]["OptionsText"]);
+            }
+
+            var clsteam_filter = $grid.pqGrid("getColumn", { dataIndx: "CLS_TEAM" }).filter;
+            $.extend(clsteam_filter, {
+                options: selectCLSTeam,
+                condition: "contain",
+                prepend: { '': '--All CLS Team--' },
+                cache: null
+            });
+
+             //BC
+             for (var ii = 0; ii < BC_Group.length; ++ii) {
+                selectBC.push(BC_Group[ii]["OptionsText"]);
+                //var obj = {};
+                //obj[ii] = BC_Group[ii]["OptionsText"];
+                //selectBC.push(obj);
+            }
+
+            var BC_filter = $grid.pqGrid("getColumn", { dataIndx: "BC" }).filter;
+            $.extend(BC_filter, {
+                options: selectBC,
+                condition: "contain",
+                prepend: { '': '--All BC--' },
+                cache: null
+            });
+
+             //Credit_Rating
+             for (var ii = 0; ii < Credit_Rating_Group.length; ++ii) {
+                selectCredit_Rating.push(Credit_Rating_Group[ii]["OptionsText"]);
+            }
+
+            var Credit_Rating_filter = $grid.pqGrid("getColumn", { dataIndx: "Credit_Rating" }).filter;
+            $.extend(Credit_Rating_filter, {
+                options: selectCredit_Rating,
+                condition: "contain",
+                prepend: { '': '--All Credit_Rating--' },
+                cache: null
+            });
+
+             //Billing_Type
+             for (var ii = 0; ii < Billing_Type_Group.length; ++ii) {
+                selectBilling_Type.push(Billing_Type_Group[ii]["OptionsText"]);
+            }
+
+            var Billing_Type_filter = $grid.pqGrid("getColumn", { dataIndx: "Billing_Type" }).filter;
+            $.extend(Billing_Type_filter, {
+                options: selectBilling_Type,
+                condition: "contain",
+                prepend: { '': '--All Billing Type--' },
+                cache: null
+            });
+
+             //Collection_Type
+             for (var ii = 0; ii < Collection_Type_Group.length; ++ii) {
+                selectCollection_Type.push(Collection_Type_Group[ii]["OptionsText"]);
+            }
+
+            var Collection_Type_filter = $grid.pqGrid("getColumn", { dataIndx: "Collection_Type" }).filter;
+            $.extend(Collection_Type_filter, {
+                options: selectCollection_Type,
+                condition: "contain",
+                prepend: { '': '--All Collection Type--' },
+                cache: null
+            });
+
+             //Billing_Placement_Date
+             for (var ii = 0; ii < Billing_Placement_Date_Group.length; ++ii) {
+                selectBilling_Placement_Date.push(Billing_Placement_Date_Group[ii]["OptionsText"]);
+            }
+
+            var Billing_Placement_Date_filter = $grid.pqGrid("getColumn", { dataIndx: "Billing_Placement_Date" }).filter;
+            $.extend(Billing_Placement_Date_filter, {
+                options: selectBilling_Placement_Date,
+                condition: "contain",
+                prepend: { '': '--All Billing Placement Date--' },
+                cache: null
+            });
+
+             //Collection_Payment_Date
+             for (var ii = 0; ii < Collection_Payment_Date_Group.length; ++ii) {
+                selectCollection_Payment_Date.push(Collection_Payment_Date_Group[ii]["OptionsText"]);
+            }
+
+            var Collection_Payment_Date_filter = $grid.pqGrid("getColumn", { dataIndx: "Collection_Payment_Date" }).filter;
+            $.extend(Collection_Payment_Date_filter, {
+                options: selectCollection_Payment_Date,
+                condition: "contain",
+                prepend: { '': '--All Collection Payment Date--' },
+                cache: null
+            });
+
+             //Group_Customer
+             for (var ii = 0; ii < Group_Customer_Group.length; ++ii) {
+                selectGroup_Customer.push(Group_Customer_Group[ii]["OptionsText"]);
+            }
+
+            var Group_Customer_filter = $grid.pqGrid("getColumn", { dataIndx: "Group_Customer" }).filter;
+            $.extend(Group_Customer_filter, {
+                options: selectGroup_Customer,
+                condition: "contain",
+                prepend: { '': '--All Group Customer--' },
+                cache: null
+            });
+
+             //Business_Type
+             for (var ii = 0; ii < Business_Type_Group.length; ++ii) {
+                selectBusiness_Type.push(Business_Type_Group[ii]["OptionsText"]);
+            }
+
+            var Business_Type_filter = $grid.pqGrid("getColumn", { dataIndx: "Business_Type" }).filter;
+            $.extend(Business_Type_filter, {
+                options: selectBusiness_Type,
+                condition: "contain",
+                prepend: { '': '--All Business Type--' },
+                cache: null
+            });
+
+            $grid.pqGrid("refreshHeader");
+        });
+    }
+
+
+    function reloadDate() {
+        window.location = "/zukami/compositeview.aspx?AppID=5eeea5e8-bdb2-499f-9c29-f12a726fc7f3&ID=58af4a86-c27f-467a-b0a7-9036676ba2a1&Period=" + $("#ddlPeriod").val();
+    }
+
+
+    window.onload = function () {
+        canEdit = false;
+        setMenu();
+        $.ajax({
+            url: ('/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_Month&Filter1&Filter2'),
+            type: "GET",
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    if (i == data.length -1) {
+                        $("#ddlPeriod").append("<option value=\"" + data[i].OptionsValue + "\" selected>" + data[i].OptionsText + "</option>");
+                        lastMonthStr = data[i].OptionsText;
+                    } else {
+                        $("#ddlPeriod").append("<option value=\"" + data[i].OptionsValue + "\" >" + data[i].OptionsText + "</option>")
+                    }
+                    // $("#ddlPeriod").append("<option value=\"" + data[i].OptionsValue + "\" >" + data[i].OptionsText + "</option>")
+                    // var isLastElement = i == data.length -1;
+                    // if (isLastElement) 
+                    //     $("#ddlPeriod").append("<option value='' selected>ALL</option>")
+                }
+                console.log(getUrlParameter('Period'));
+                canEdit = true;
+                if (getUrlParameter('Period') != null && getUrlParameter('Period') != "") {
+                    $("#ddlPeriod").val(getUrlParameter('Period'));
+                    console.log(lastMonthStr);
+                    if (lastMonthStr != getUrlParameter('Period')) {
+                        canEdit = false;
+                    }
+                }
+                getCLSTeam();
+                getCredit_Rating();
+                getBilling_Type();
+                getCollection_Type();
+                getBilling_Placement_Date();
+                getCollection_Payment_Date();
+                getGroup_Customer();
+                getBusiness_Type();
+                BindGrid();
+            }
+        });
+    }
+</script>

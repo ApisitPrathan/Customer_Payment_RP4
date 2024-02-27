@@ -1,0 +1,1065 @@
+<style>
+    .pq-grid .darkblue td {
+        background: #89ACDC;
+        color: white;
+    }
+
+    .pq-grid .blue td {
+        background: blue;
+        color: white;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    span.saving {
+        display: none;
+        font-size: large;
+        background: yellow;
+        color: Red;
+        font-weight: normal;
+        margin-left: 20px;
+    }
+
+    tr.red td {
+        background: red;
+        color: Green;
+    }
+
+    tr.green td {
+        background: green;
+        color: yellow;
+    }
+
+    tr td.green {
+        background: lightgreen;
+        color: Red;
+    }
+
+    tr td.red {
+        background: brown;
+        color: yellow;
+    }
+
+    tr td.brightYellow {
+        background: #FCF3CF;
+        color: #000033;
+    }
+
+
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+
+    div.pq-grid td.ui-state-highlight {
+        background: #F1C40F;
+        font-weight: bold;
+        color: black;
+    }
+
+
+    .pq-grid-cell-hover.ui-state-hover,
+    .pq-grid-row-hover.ui-state-hover>td {
+        background: #FCFA5D;
+    }
+
+    tr td.brightYellow {
+        background: #F8E6F0;
+        color: black;
+        border-color: black;
+        border-style: solid;
+        border-width: 5px;
+    }
+
+    tr td.brightBlue {
+        background: #DDE8F3;
+        color: black;
+        border-color: black;
+        border-style: solid;
+        border-width: 5px;
+    }
+
+    body {
+
+        font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    a {
+        color: #b63b4d;
+        text-decoration: none;
+    }
+
+    /** =======================
+ * Contenedor Principal
+ ===========================*/
+
+
+    h1 {
+        color: #FFF;
+        font-size: 24px;
+        font-weight: 400;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+    h1 a {
+        color: #c12c42;
+        font-size: 16px;
+    }
+
+    .accordion {
+        width: 100%;
+        max-width: 360px;
+        margin: 30px auto 20px;
+        background: #FFF;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .accordion .link {
+        cursor: pointer;
+        display: block;
+        padding: 15px 15px 15px 42px;
+        color: #4D4D4D;
+        font-size: 14px;
+        font-weight: 700;
+        border-bottom: 1px solid #CCC;
+        position: relative;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+    .accordion li:last-child .link {
+        border-bottom: 0;
+    }
+
+    .accordion li i {
+        position: absolute;
+        top: 16px;
+        left: 12px;
+        font-size: 18px;
+        color: #595959;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+    .accordion li i.fa-chevron-down {
+        right: 12px;
+        left: auto;
+        font-size: 16px;
+    }
+
+    .accordion li.open .link {
+        color: #b63b4d;
+    }
+
+    .accordion li.open i {
+        color: #b63b4d;
+    }
+
+    .accordion li.open i.fa-chevron-down {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+
+    /**
+ * Submenu
+ -----------------------------*/
+
+
+    .submenu {
+        display: none;
+        background: #444359;
+        font-size: 14px;
+    }
+
+    .submenu li {
+        border-bottom: 1px solid #4b4a5e;
+    }
+
+    .submenu a {
+        display: block;
+        text-decoration: none;
+        color: #d9d9d9;
+        padding: 12px;
+        padding-left: 42px;
+        -webkit-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .submenu a:hover {
+        background: #b63b4d;
+        color: #FFF;
+    }
+
+    tr td.SectionColor {
+        background: #D6EAF8;
+
+    }
+
+    tr td.SectionColor2 {
+        background: #FADBD8;
+
+    }
+
+    tr td.brightYellow {
+        background: #F9F507;
+        color: #000033;
+    }
+
+    .pq-grid .Blue {
+
+        color: #0D46D2;
+    }
+
+    .pq-grid .BlueGrandTotal {
+        background: #D9D2DC;
+        color: #0D46D2;
+    }
+
+    .pq-grid .GrandTotal {
+        background: #D9D2DC;
+        color: black;
+
+    }
+</style>
+<script src="pqGrid/jquery.min.js"></script>
+<script src="pqGrid/jquery-ui.min.js"></script>
+<script src="pqgrid.min.js"></script>
+<script>
+    var $pageID='3bee770e-ecc2-43e8-a993-0ae323b20214';
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    var d = new Date(2020, 04, 31);
+    var tempData = "";
+    var canEdit = false;
+    var lastMonthStr = "";
+
+    var nextMonth = "";
+    var curMonth = "";
+
+    var day = "";
+    var dayTxt = "";
+
+    var Transection_Date = [];
+    var selectTransection_Date = [];
+    var Billing_Team = [];
+    var selectBilling_Team = [];
+    var Bill_Pleacment = [];
+    var selectBill_Pleacment = [];
+
+    var Sum_Total_Amount,
+        Sum_of_Total_Applied_Amount,
+        Sum_OS_Amount,
+        Sum_Amount_to_Paid;
+    
+    var CLSTeam_Group = [];
+    var selectCLSTeam = [];
+
+    var BC_Group = [];
+    var selectBC = [];
+
+    function setMenu() {
+
+
+        var Accordion = function (el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+
+            // Variables privadas
+            var links = this.el.find('.link');
+            // Evento
+            links.on('click', { el: this.el, multiple: this.multiple }, this.dropdown)
+        }
+
+        Accordion.prototype.dropdown = function (e) {
+            var $el = e.data.el;
+            $this = $(this),
+                $next = $this.next();
+
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+
+            if (!e.data.multiple) {
+                $el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+            };
+        }
+
+        var accordion = new Accordion($('#accordion'), false);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+
+
+
+    }
+
+    function getDate(time) {
+
+        let end = time.indexOf(')');
+        let subEnd = time.substr(0, end);
+        let str = subEnd.indexOf('(') + 1;
+        return subEnd.substr(str)
+    }
+    function convertDate(ui) {
+        var a = new Date(+getDate(ui));
+        //var a = new Date(ui);
+        // //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        //var month = months[a.getMonth()];
+        var month = a.getMonth() + 1;
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = month + ' ' + date + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+        return new Date(time);
+    }
+
+    function replaceAll(string, search, replace) {
+        if (string == undefined) { return ""; }
+        else {
+            return string.split(search).join(replace);
+        }
+    }
+
+    function isEmpty(val) {
+        return (val === undefined || val == null || val.length <= 0) ? true : false;
+    }
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    function getCLSTeam(){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_CLSTEAM';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    CLSTeam_Group = data;
+                }
+        });
+    }
+    //#region load master
+    function getBC(pCLS_Team){
+        var url = '/Customer_Payment_Service/Report/GetDDLOptions?Module=BY_BC&Filter1=' + pCLS_Team + '&Filter2=';
+        $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                dataType: 'json', 
+                success: function (data) {
+                    BC_Group = [];
+                    selectBC = [];
+                    BC_Group = data;
+                    //BC
+                    for (var ii = 0; ii < BC_Group.length; ++ii) {
+                        selectBC.push(BC_Group[ii]["OptionsText"]);
+                        //var obj = {};
+                        //obj[ii] = BC_Group[ii]["OptionsText"];
+                        //selectBC.push(obj);
+                    }
+                    var $grid = $("#grid");
+                    var BC_filter = $grid.pqGrid("getColumn", { dataIndx: "BC" }).filter;
+                    $.extend(BC_filter, {
+                        options: selectBC,
+                        condition: "contain",
+                        prepend: { '': '--All BC--' },
+                        cache: null
+                    });
+                    $grid.pqGrid("refreshHeader");
+                }
+        });
+    }
+
+    function BindGrid() {
+        //to check whether any row is currently being edited.
+        function isEditing($grid) {
+            var rows = $grid.pqGrid("getRowsByClass", { cls: 'pq-row-edit' });
+            if (rows.length > 0) {
+                //focus on editor if any
+                $grid.find(".pq-editor-focus").focus();
+                return true;
+            }
+            return false;
+        }
+        function dateEditor(ui) {
+            var $inp = ui.$cell.find("input"),
+                $grid = $(this),
+                validate = function (that) {
+                    var valid = $grid.pqGrid("isValid", {
+                        dataIndx: ui.dataIndx,
+                        value: $inp.val(),
+                        rowIndx: ui.rowIndx
+                    }).valid;
+                    if (!valid) {
+                        that.firstOpen = false;
+                    }
+                };
+
+            //initialize the editor
+            $inp
+                .on("input", function (evt) {
+                    validate(this);
+                })
+                .datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showAnim: '',
+                    onSelect: function () {
+                        this.firstOpen = true;
+                        validate(this);
+                    },
+                    beforeShow: function (input, inst) {
+                        return !this.firstOpen;
+                    },
+                    onClose: function () {
+                        this.focus();
+                    }
+                });
+        }
+        function pqDatePicker(ui) {
+            var $this = $(this);
+            $this
+                //.css({ zIndex: 3, position: "relative" })
+                .datepicker({
+                    //format: 'dd-mm-yy',
+                    //dateFormat: 'mm/dd/yy',
+                    yearRange: "-10:+0", //25 years prior to present.
+                    changeYear: true,
+                    changeMonth: true,
+                    showButtonPanel: true,
+                    onClose: function (evt, ui) {
+                        $(this).focus();
+                    }
+                });
+            $this.filter(".pq-from").datepicker({ format: 'dd-mm-yy' }, "option", "defaultDate", new Date());
+            //default To date
+            $this.filter(".pq-to").datepicker({ format: 'dd-mm-yy' }, "option", "defaultDate", new Date());
+        }
+
+        var dataModel = {
+            recIndx: "ID",
+            location: "remote",
+            dataType: "JSON",
+            method: "GET",
+            //url: "http://13.192.0.194/OLKService/LTO/GetCustomerListMainLTO?pq_curPage=1&pq_rPP=20",
+            //url: "http://13.192.0.194/OLKService/LTO/GetCustomerListMainLTO?CustID="+filterCustID,
+            //url: "http://13.192.0.194/CashMatchingService2/CashMatching/GetCashMatchingList",
+            //url: "http://localhost:54223/CashMatching/GetCashMatchingList",
+            url: "/Customer_Payment_Service/Report/GetReport_By_Details", //+ "&pq_curPage=1&pq_rPP=20",
+            //url: "http://localhost:54223/ReportByCust/GetReportByCustList",
+            getData: function (dataJSON) {
+                $(".saving", $grid).hide();
+
+                var data = dataJSON.data;
+                tempData = dataJSON.data;
+                var pCLS_Team = !isEmpty(colM[4].filter.value) ? colM[4].filter.value : "";
+                 getBC(pCLS_Team);
+                return { curPage: dataJSON.curPage, totalRecords: dataJSON.totalRecords, data: data };
+
+            }
+        };
+
+
+        var colModel = [
+            colM = [
+                {
+                    title: "Location", width: 25, dataIndx: "LOCATION", copy: false,editable: false,
+                    filter: { 
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All--' },
+                        listeners: ['change'],
+                        options: [ 'FXTH','FXLT' ]          
+                
+		            }
+                },
+                {
+                    title: "Cust. ID", width: 70, dataIndx: "Customer_Id", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "Customer Name (TH)", width: 100, dataIndx: "Customer_Name", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "Customer Name (ENG)", width: 100, dataIndx: "Customer_Name_Eng", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "CLS Team", width: 125, dataIndx: "CLS_TEAM", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All CLS Team--' },
+                        //listeners: ['change']
+                        listeners: [{ 'change': filterhandler}],
+                        // listeners: [{
+                        //     "change": function (evt,ui) {
+                        //         //columnBC
+                        //         var columnBC = $grid.pqGrid("getColumn", { dataIndx: "BC" });
+                        //         columnBC.filter.value=null;
+                                
+                        //         return;
+                        //      }
+                        // }]
+                    }
+                },
+                {
+                    title: "BC", width: 100, dataIndx: "BC", copy: false,editable: false,
+                    filter: {
+                        type: "select",
+                        condition: 'contain',
+                        prepend: { '': '--All BC Team--' },
+                        listeners: ['change']
+                    },
+                },
+                {
+                    title: "TRX NUMBER", width: 100, dataIndx: "TRX_NUMBER", copy: false,editable: false,
+                    filter: { type: 'textbox', condition: 'contain', listeners: ['change'], cls: 'uppercase' },
+                },
+                {
+                    title: "TRX DATE", width: 75, dataIndx: "TRX_DATE", copy: false,editable: false,
+                },
+                {
+                    title: "DUE DATE", width: 75, dataIndx: "DUE_DATE", copy: false,editable: false,
+                },
+                {
+                    title: "Current", width: 100, dataIndx: "OST_AMOUNT0_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT0_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT0_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT0_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT0_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "1-30 days (B1)", width: 100, dataIndx: "OST_AMOUNT1_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT1_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT1_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT1_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT1_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "31-60 days (B2)", width: 100, dataIndx: "OST_AMOUNT2_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT2_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT2_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT2_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT2_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "61-90 days (B3)", width: 100, dataIndx: "OST_AMOUNT3_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT3_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT3_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT3_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT3_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "91 days+ (B4&before)", width: 100, dataIndx: "OST_AMOUNT4_AGING", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT4_AGING == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT4_AGING < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT4_AGING"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT4_AGING"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Total as of "+ $.datepicker.formatDate('dd M', new Date()), width: 100, dataIndx: "OST_AMOUNT_Total", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.OST_AMOUNT_Total == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.OST_AMOUNT_Total < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT_Total"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["OST_AMOUNT_Total"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+            
+                {
+                    title: "WHT AMOUNT", width: 100, dataIndx: "WHT_AMOUNT", copy: false,editable: false,align: "right",
+                    render: function (ui) {
+                        var rowData = ui.rowData;
+
+                        rowData.pq_cellcls = rowData.pq_cellcls || {};
+                        if (rowData.WHT_AMOUNT == null) { return "0.00"; }
+                        else {
+                            var linkItem = "";
+                            if (rowData.WHT_AMOUNT < 0) { linkItem = "(" + $.paramquery.formatCurrency(ui.rowData["WHT_AMOUNT"]) + ")"; }
+
+                            else {
+                                linkItem = $.paramquery.formatCurrency(ui.rowData["WHT_AMOUNT"]);
+                            }
+                            return linkItem;
+                        }
+                    },
+                },
+                {
+                    title: "Reason", width: 100, dataIndx: "Reason", copy: false,cls: "brightYellow",
+                    editor: {
+                        type: 'select',
+                        valueIndx: "value",
+		                labelIndx: "text",		            		            
+                        mapIndices: {"text": "Reason", "value": "Reason"},
+                        // listeners: [{
+                        //     "change": function (evt,ui) {
+                        //         //columnBC
+                        //         var columnReason = $grid.pqGrid("getColumn", { dataIndx: "Reason" });
+                        //         var columnPayment_Date = $grid.pqGrid("getColumn", { dataIndx: "Payment_Date" });
+                                
+                                
+                        //         return;
+                        //      }
+                        // }],
+                        options: [
+                        { "value": "Pending WHT certificate" , "text": "Pending WHT certificate" },
+                        { "value": "Committed to paid" , "text": "Committed to paid" },
+                        { "value": "LTO not committed to paid" , "text": "LTO not committed to paid" },
+                        { "value": "Not due yet" , "text": "Not due yet" },
+                        ]
+                    },
+                    filter: { 
+                            type: "select",
+            		        condition: 'equal',
+            		        prepend: { '': '--All--' },
+            		        listeners: ['change'],
+            		        options: ["Pending WHT certificate"
+                                    , "Committed to paid"
+                                    , "LTO not committed to paid" 
+                                    , "Not due yet"
+                                ]          
+                
+		            }
+                },
+                {
+                    title: "Status_LTO", width: 100, dataIndx: "Status_LTO", copy: false,cls: "brightYellow",
+                    editor: {
+                        type: 'select',
+                        valueIndx: "value",
+		                labelIndx: "text",		            		            
+                        mapIndices: {"text": "Status_LTO", "value": "Status_LTO"},
+                        //listeners: ['change'],
+                        options: [
+                        { "value": "LTO (WHT)" , "text": "LTO (WHT)" },
+                        { "value": "LTO committed to paid" , "text": "LTO committed to paid" },
+                        { "value": "LTO not committed to paid" , "text": "LTO not committed to paid" },
+                        { "value": "No LTO" , "text": "No LTO" },
+                        ]
+                    },
+                    filter: { 
+                            type: "select",
+            		        condition: 'equal',
+            		        prepend: { '': '--All--' },
+            		        listeners: ['change'],
+            		        options: ["LTO (WHT)"
+                                    , "LTO committed to paid"
+                                    , "LTO not committed to paid" 
+                                    , "No LTO"
+                                ]          
+                
+		            }
+                },
+                {
+                    title: "Payment Date", width: 100, dataIndx: "Payment_Date", copy: false,cls: "brightYellow",
+                    editor: {
+                        type: 'textbox',
+                        init: dateEditor
+                    },
+                    render: function (ui) {
+                        var cellData = ui.cellData;
+                        if (cellData) {
+                            return cellData;
+                        }
+                        else {
+                            return "";
+                        }
+                    },
+                    
+                },
+                
+            ]
+        ];
+
+        var newobj = {
+            dataModel: dataModel,
+            // groupModel : groupModel,
+            colModel: colM,
+            pageModel: { type: "remote", rPP: 20, strRpp: "{0}" },
+            editable: false,
+            selectionModel: { type: 'cell' },
+            filterModel: { on: true, mode: "AND", header: true },
+            hoverMode: 'row',
+            selectionModel: { type: 'row', mode: 'range' },
+            height: 'flex',
+            scrollModel: { horizontal: true, Vertical: true },
+            showTitle: true,
+            showBottom: true,
+            copyModel: { header: true },
+            editable: true,
+            title: "Report By Details",
+            resizable: true,
+            freezeCols: 7,
+            showBottom: true,
+            numberCell: { resizable: true, title: "#" },
+            trackModel: { on: true }, //to turn on the track changes.  
+            // editable: function (ui) {
+            //     var $grid = $(this);
+            //     var rowIndx = ui.rowIndx;
+            //     if ($grid.pqGrid("hasClass", { rowIndx: rowIndx, cls: 'pq-row-edit' }) == true) {
+            //         return true;
+            //     }
+            //     else {
+            //         return false;
+            //     }
+            //     //return this.hasClass({ rowIndx: ui.rowIndx, cls: 'pq-row-edit' });
+            // },
+            change: function (evt, ui) {
+                //debugger;
+                
+                if (ui.source == 'commit' || ui.source == 'rollback') {
+                    return;
+                }
+                console.log(ui);
+                var $grid = $(this),
+                    grid = $grid.pqGrid('getInstance').grid;
+                    
+                var rowList = ui.rowList,
+                    addList = [],
+                    recIndx = grid.option('dataModel').recIndx,
+                    deleteList = [],
+                    updateList = [];
+
+                for (var i = 0; i < rowList.length; i++) {
+                    var obj = rowList[i],
+                        rowIndx = obj.rowIndx,
+                        newRow = obj.newRow,
+                        type = obj.type,
+                        rowData = obj.rowData;
+                    if (type == 'add') {
+                        //var valid = grid.isValid({ rowData: newRow, allowInvalid: true }).valid;
+                        //if (valid) {
+                            addList.push(newRow);
+                        //}
+                    }
+                    else if (type == 'update') {
+                        var valid = grid.isValid({ rowData: rowData, allowInvalid: true }).valid;
+                        if (valid) {
+                            //if (rowData[recIndx] == null) {
+                            //    addList.push(rowData);
+                            //}
+                            //else if (grid.isDirty({rowData: rowData})) {
+                            //else {
+                            if(rowData.Reason == 'Pending WHT certificate' && (rowData.Payment_Date == '' || rowData.Payment_Date == null)
+                            || rowData.Reason == 'Commited to paid' && (rowData.Payment_Date == '' || rowData.Payment_Date == null)
+                            || rowData.Status_LTO == 'LTO (WHT)' && (rowData.Payment_Date == '' || rowData.Payment_Date == null)
+                            || rowData.Status_LTO == 'LTO commited to paid' && (rowData.Payment_Date == '' || rowData.Payment_Date == null))
+                            {
+                                alert('Please fill in payment date.')
+                                return;
+                            }
+                            else
+                                updateList.push(rowData);
+                            //}
+                        }
+                    }
+                    else if (type == 'delete') {
+                        if (rowData[recIndx] != null) {
+                            deleteList.push(rowData);
+                        }
+                    }
+                }
+                if (addList.length || updateList.length) {
+                    var jsonToBeSend = new Object();
+                    if(addList.length){
+                        jsonToBeSend["ID"] = !isEmpty(addList[0].ID) ? addList[0].ID : "";
+                    }
+                    else if(updateList.length){
+                        jsonToBeSend["LOCATION"] = !isEmpty(rowData.LOCATION) ? rowData.LOCATION : "";
+                        jsonToBeSend["Customer_Id"] = !isEmpty(rowData.Customer_Id) ? rowData.Customer_Id : "";
+                        jsonToBeSend["TRX_NUMBER"] = !isEmpty(rowData.TRX_NUMBER) ? rowData.TRX_NUMBER : "";
+                        jsonToBeSend["Reason"] = !isEmpty(rowData.Reason) ? rowData.Reason : "";
+                        jsonToBeSend["Status_LTO"] = !isEmpty(rowData.Status_LTO) ? rowData.Status_LTO : "";
+                        jsonToBeSend["Payment_Date"] = !isEmpty(rowData.Payment_Date) ? rowData.Payment_Date : "";
+                    }
+                    $.ajax({
+                        url: '/Customer_Payment_Service/Report/UpdateReport_By_Details',
+                        data: JSON.stringify(jsonToBeSend),
+                        dataType: "json",
+                        type: "POST",
+                        async: true,
+                        // beforeSend: function (jqXHR, settings) {
+                        //     $(".saving", $grid).show();
+                        // },
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Accept", "application/json");
+                            xhr.setRequestHeader("Content-Type", "application/json");
+                        },
+                        success: function (changes) {
+                            //commit the changes.                
+                            grid.commit({ type: 'add', rows: changes.addList });
+                            grid.commit({ type: 'update', rows: changes.updateList });
+                            grid.commit({ type: 'delete', rows: changes.deleteList });
+                            // $grid.pqGrid("removeClass", { rowIndx: rowIndx, cls: 'pq-row-edit' });
+                            $grid.pqGrid("commit");
+                            $grid.pqGrid("quitEditMode");
+                            $grid.pqGrid("removeClass", { rowIndx: rowIndx, cls: 'pq-row-edit' });
+                            $grid.pqGrid("refreshRow", { rowIndx: rowIndx });
+                            $grid.pqGrid("refreshDataAndView");
+                            
+                        },
+                        complete: function () {
+                            $(".saving", $grid).hide();
+                        }
+                    });
+                }
+            },
+            toolbar: {
+                cls: 'pq-toolbar-export',
+                items: [
+                {
+                        type: "<span>&nbsp;&nbsp;</span>"
+                },
+                {
+                        type: 'button',
+                        label: "Export to Excel",
+                        icon: 'ui-icon-document',
+                        listeners: [{
+                            "click": function (evt) {
+                                var filterCustomer_ID = !isEmpty(colM[1].filter.value) ? colM[1].filter.value : "";//Customer_ID
+                                  var filterCustomer_Name = !isEmpty(colM[2].filter.value) ? colM[2].filter.value : "";//Customer_Name
+                                  var filterCustomer_Name_Eng = !isEmpty(colM[3].filter.value) ? colM[3].filter.value : "";//Customer_Name_Eng
+                                  var filterCLSTeam = !isEmpty(colM[4].filter.value) ? colM[4].filter.value : "";//CLSTeam
+                                  var filterBC = !isEmpty(colM[5].filter.value) ? colM[5].filter.value : "";//BC
+                                  var filterTRX_Number = !isEmpty(colM[6].filter.value) ? colM[6].filter.value : "";//TRX_Number
+                                 var urlExport = "/Customer_Payment_Service/Report/DownloadExcelReport_By_Details?" + 
+                                 "FileName=Report By Customer Payment" +
+                                 "&Customer_Id="+ filterCustomer_ID +
+                                 "&Customer_Name="+ filterCustomer_Name +
+                                 "&Customer_Name_Eng="+ filterCustomer_Name_Eng +
+                                 "&BC="+ filterBC +
+                                 "&CLS_Team="+ filterCLSTeam +
+                                 "&TRX_Number="+ filterTRX_Number
+                                 window.location.href = urlExport;
+                            }
+                        }]
+                }
+                ]
+            }
+        };
+
+        var $summary = "";
+
+        newobj.render = function (evt, ui) {
+            $summary = $("<div class='pq-grid-summary'  ></div>")
+                .prependTo($(".pq-grid-bottom", this));
+
+            console.log($summary);
+        }
+
+        function filterhandler(evt, ui) {
+            var columnBC = $grid.pqGrid("getColumn", { dataIndx: "BC" });
+            columnBC.filter.value = null;
+            var filterObject = [];
+            var CM = $grid.pqGrid("getColModel");
+            for (var i = 0, len = CM.length; i < len; i++) {
+                var dataIndx = CM[i].dataIndx;
+                var val = "";
+                if (CM[i].filter != undefined)
+                    val = CM[i].filter.value;
+                if (dataIndx == ui.dataIndx)
+                    val = ui.value;
+                filterObject.push({ dataIndx: dataIndx, condition: 'contain', value: val });
+            }
+
+
+            //var filterObject = [{ dataIndx: 'CLS_Team', condition: 'contain', value: ui.value }];
+            $grid.pqGrid("filter", {
+                oper: 'replace',
+                data: filterObject
+            });
+        }
+
+        function calculateSummary() {
+            var Sum_R_1 = 0,
+                Sum_R_2 = 0,
+                Sum_R_3 = 0,
+                Sum_R_5 = 0,
+                Sum_Total = 0
+            if (tempData != "") {
+                for (var i = 0; i < tempData.length; i++) {
+                    var row = tempData[i];
+                    //Sum_OST_AMOUNT_ART_AGING_BUCKETS += parseFloat(row.OST_AMOUNT_ART_AGING_BUCKETS);
+                    Sum_R_1 += parseFloat(row.R_1);
+                    Sum_R_2 += parseFloat(row.R_2);
+                    Sum_R_3 += parseFloat(row.R_3);
+                    Sum_R_5 += parseFloat(row.R_5);
+                    Sum_Total += parseFloat(row.Total);
+                }
+                //Sum_OST_AMOUNT_ART_AGING_BUCKETS = $.paramquery.formatCurrency(Sum_OST_AMOUNT_ART_AGING_BUCKETS);
+                Sum_R_1 = $.paramquery.formatCurrency(Sum_R_1);
+                Sum_R_2 = $.paramquery.formatCurrency(Sum_R_2);
+                Sum_R_3 = $.paramquery.formatCurrency(Sum_R_3);
+                Sum_R_5 = $.paramquery.formatCurrency(Sum_R_5);
+                Sum_Total = $.paramquery.formatCurrency(Sum_Total);
+                totalData = {
+                    Status_WHT: "<b>Total :</b>",
+                    //OST_AMOUNT_ART_AGING_BUCKETS: Sum_OST_AMOUNT_ART_AGING_BUCKETS,
+                    R_1: Sum_R_1,
+                    R_2: Sum_R_2,
+                    R_3: Sum_R_3,
+                    R_5: Sum_R_5,
+                    Total: Sum_Total
+
+                };
+                var data = [totalData];
+                var newobj = { data: data, $cont: $summary };
+                $("#grid").pqGrid("createTable", newobj);
+            }
+
+        }
+
+
+        newobj.refresh = function (evt, ui) {
+            //calculateSummary();
+
+
+        }
+        var $grid = $("#grid").pqGrid(newobj);
+        
+        $grid.one("pqgridload", function (evt, ui) {
+            //CLSTeam_Group 
+            for (var ii = 0; ii < CLSTeam_Group.length; ++ii) {
+                selectCLSTeam.push(CLSTeam_Group[ii]["OptionsText"]);
+            }
+
+            var clsteam_filter = $grid.pqGrid("getColumn", { dataIndx: "CLS_TEAM" }).filter;
+            $.extend(clsteam_filter, {
+                options: selectCLSTeam,
+                condition: "contain",
+                prepend: { '': '--All CLS Team--' },
+                cache: null
+            });
+
+             //BC
+             for (var ii = 0; ii < BC_Group.length; ++ii) {
+                selectBC.push(BC_Group[ii]["OptionsText"]);
+                //var obj = {};
+                //obj[ii] = BC_Group[ii]["OptionsText"];
+                //selectBC.push(obj);
+            }
+
+            var BC_filter = $grid.pqGrid("getColumn", { dataIndx: "BC" }).filter;
+            $.extend(BC_filter, {
+                options: selectBC,
+                condition: "contain",
+                prepend: { '': '--All BC--' },
+                cache: null
+            });
+            $grid.pqGrid("refreshHeader");
+        });
+    }
+
+
+    function reloadDate() {
+        window.location = "/zukami/compositeview.aspx?AppID=5eeea5e8-bdb2-499f-9c29-f12a726fc7f3&ID=58af4a86-c27f-467a-b0a7-9036676ba2a1&Period=" + $("#ddlPeriod").val();
+    }
+
+
+    window.onload = function () {
+        canEdit = false;
+        setMenu();
+        getCLSTeam();
+        BindGrid();
+    }
+</script>
